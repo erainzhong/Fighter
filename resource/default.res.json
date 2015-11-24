@@ -1,7 +1,7 @@
 {
     "resources":
         [
-            {"name":"bgImage","type":"image","url":"assets/bg.jpg"},
+            {"name":"bgImage","type":"image","url":"assets/bg.png"},
             {"name":"btnStart","type":"image","url":"assets/btn_start.png"},
             {"name":"f1","type":"image","url":"assets/f1.png"},
             {"name":"f2","type":"image","url":"assets/f2.png"},

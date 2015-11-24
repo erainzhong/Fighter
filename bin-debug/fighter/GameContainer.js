@@ -12,7 +12,7 @@ var fighter;
             /**敌人的飞机*/
             this.enemyFighters = [];
             /**触发创建敌机的间隔*/
-            this.enemyFightersTimer = new egret.Timer(1000);
+            this.enemyFightersTimer = new egret.Timer(GameConfig.ENEMY_FIGHTER_TIMER);
             /**敌人的子弹*/
             this.enemyBullets = [];
             /**我的成绩*/
@@ -43,6 +43,7 @@ var fighter;
             //我的飞机
             this.myFighter = new fighter.Airplane(RES.getRes("f1"), 100);
             this.myFighter.y = this.stageH - this.myFighter.height - 50;
+            this.myFighter.x = (this.stageW - this.myFighter.width) / 2;
             this.addChild(this.myFighter);
             this.scorePanel = new fighter.ScorePanel();
             //预创建
@@ -58,7 +59,7 @@ var fighter;
             }
             for (i = 0; i < 20; i++) {
                 bullet = objArr.pop();
-                fighter.Bullet.reclaim(bullet, "b1");
+                fighter.Bullet.reclaim(bullet);
             }
             for (i = 0; i < 20; i++) {
                 var bullet = fighter.Bullet.produce("b2");
@@ -66,7 +67,7 @@ var fighter;
             }
             for (i = 0; i < 20; i++) {
                 bullet = objArr.pop();
-                fighter.Bullet.reclaim(bullet, "b2");
+                fighter.Bullet.reclaim(bullet);
             }
             for (i = 0; i < 20; i++) {
                 var enemyFighter = fighter.Airplane.produce("f2", 1000);
@@ -74,7 +75,7 @@ var fighter;
             }
             for (i = 0; i < 20; i++) {
                 enemyFighter = objArr.pop();
-                fighter.Airplane.reclaim(enemyFighter, "f2");
+                fighter.Airplane.reclaim(enemyFighter);
             }
         };
         /**游戏开始*/
@@ -164,7 +165,7 @@ var fighter;
                 if (theFighter.y > this.stage.stageHeight) {
                     this.removeChild(theFighter);
                     fighter.Airplane.reclaim(theFighter);
-                    theFighter.removeEventListener("createBullet", this.createEnemyBulletHandler, this);
+                    theFighter.removeEventListener("createBullet", this.createBulletHandler, this);
                     theFighter.stopFire();
                     this.enemyFighters.splice(i, 1);
                     i--;
@@ -254,6 +255,9 @@ var fighter;
         };
         /**游戏结束*/
         p.gameStop = function () {
+            if (GameConfig.FIGHTER_UNLIMIT_BLOOD) {
+                return;
+            }
             this.addChild(this.btnStart);
             this.bg.pause();
             this.removeEventListener(egret.Event.ENTER_FRAME, this.gameViewUpdate, this);

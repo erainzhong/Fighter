@@ -20,7 +20,7 @@ module fighter
         /**敌人的飞机*/
         private enemyFighters:fighter.Airplane[] = [];
         /**触发创建敌机的间隔*/
-        private enemyFightersTimer:egret.Timer = new egret.Timer(1000);
+        private enemyFightersTimer:egret.Timer = new egret.Timer(GameConfig.ENEMY_FIGHTER_TIMER);
         /**敌人的子弹*/
         private enemyBullets:fighter.Bullet[] = [];
         /**成绩显示*/
@@ -57,6 +57,7 @@ module fighter
             //我的飞机
             this.myFighter = new fighter.Airplane(RES.getRes("f1"),100);
             this.myFighter.y = this.stageH-this.myFighter.height-50;
+            this.myFighter.x = (this.stageW-this.myFighter.width)/2;
             this.addChild(this.myFighter);
             this.scorePanel = new fighter.ScorePanel();
             //预创建
@@ -72,7 +73,7 @@ module fighter
             }
             for(i=0;i<20;i++) {
                 bullet = objArr.pop();
-                fighter.Bullet.reclaim(bullet,"b1");
+                fighter.Bullet.reclaim(bullet);
             }
             for(i=0;i<20;i++) {
                 var bullet = fighter.Bullet.produce("b2");
@@ -80,7 +81,7 @@ module fighter
             }
             for(i=0;i<20;i++) {
                 bullet = objArr.pop();
-                fighter.Bullet.reclaim(bullet,"b2");
+                fighter.Bullet.reclaim(bullet);
             }
             for(i=0;i<20;i++) {
                 var enemyFighter:fighter.Airplane = fighter.Airplane.produce("f2",1000);
@@ -88,7 +89,7 @@ module fighter
             }
             for(i=0;i<20;i++) {
                 enemyFighter = objArr.pop();
-                fighter.Airplane.reclaim(enemyFighter,"f2");
+                fighter.Airplane.reclaim(enemyFighter);
             }
         }
         /**游戏开始*/
@@ -116,6 +117,11 @@ module fighter
                 tx = Math.max(0,tx);
                 tx = Math.min(this.stageW-this.myFighter.width,tx);
                 this.myFighter.x = tx;
+
+//                var ty:number = evt.localY;
+//                ty = Math.max(0,ty);
+//                ty = Math.min(this.stageH-this.myFighter.height,ty);
+//                this.myFighter.y = ty;
             }
         }
         /**创建子弹(包括我的子弹和敌机的子弹)*/
@@ -179,7 +185,7 @@ module fighter
                 if(theFighter.y>this.stage.stageHeight){
                     this.removeChild(theFighter);
                     Airplane.reclaim(theFighter);
-                    theFighter.removeEventListener("createBullet",this.createEnemyBulletHandler,this);
+                    theFighter.removeEventListener("createBullet",this.createBulletHandler,this);
                     theFighter.stopFire();
                     this.enemyFighters.splice(i,1);
                     i--;
@@ -252,7 +258,7 @@ module fighter
                 while(delBullets.length>0) {
                     bullet = delBullets.pop();
                     this.removeChild(bullet);
-                    if(bullet.textureName=="b1")
+                    if(bullet.textureName =="b1")
                         this.myBullets.splice(this.myBullets.indexOf(bullet),1);
                     else
                         this.enemyBullets.splice(this.enemyBullets.indexOf(bullet),1);
@@ -271,6 +277,9 @@ module fighter
         }
         /**游戏结束*/
         private gameStop():void{
+            if (GameConfig.FIGHTER_UNLIMIT_BLOOD) {
+                return;
+            }
             this.addChild(this.btnStart);
             this.bg.pause();
             this.removeEventListener(egret.Event.ENTER_FRAME,this.gameViewUpdate,this);

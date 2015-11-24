@@ -32,7 +32,8 @@ var fighter;
             return theFighter;
         };
         /**回收*/
-        Airplane.reclaim = function (theFighter, textureName) {
+        Airplane.reclaim = function (theFighter) {
+            var textureName = theFighter.textureName;
             if (fighter.Airplane.cacheDict[textureName] == null)
                 fighter.Airplane.cacheDict[textureName] = [];
             var dict = fighter.Airplane.cacheDict[textureName];

@@ -15,6 +15,7 @@ var game_file_list = [
 	"bin-debug/fighter/Bullet.js",
 	"bin-debug/fighter/GameContainer.js",
 	"bin-debug/fighter/ScorePanel.js",
+	"bin-debug/utils/GameConfig.js",
 	"bin-debug/utils/GameUtil.js",
 	//----auto game_file_list end----
 ];
@@ -49,7 +50,7 @@ egret_native.egretStart = function () {
 		contentWidth: 480,
 		contentHeight: 800,
 		showPaintRect: false,
-		showFPS: false,
+		showFPS: true,
 		fpsStyles: "x:0,y:0,size:30,textColor:0x00c200,bgAlpha:0.9",
 		showLog: false,
 		logFilter: "",

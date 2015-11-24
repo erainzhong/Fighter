@@ -22,8 +22,9 @@ module fighter
             return theFighter;
         }
         /**回收*/
-        public static reclaim(theFighter:fighter.Airplane,textureName:string):void
+        public static reclaim(theFighter:fighter.Airplane):void
         {
+            var textureName:string = theFighter.textureName;
             if(fighter.Airplane.cacheDict[textureName]==null)
                 fighter.Airplane.cacheDict[textureName] = [];
             var dict:fighter.Airplane[] = fighter.Airplane.cacheDict[textureName];
@@ -39,6 +40,8 @@ module fighter
         private fireTimer:egret.Timer;
         /**飞机生命值*/
         public blood:number = 10;
+        /**飞机类型名字*/
+        public textureName:string;
 
         public constructor(texture:egret.Texture,fireDelay:number) {
             super();

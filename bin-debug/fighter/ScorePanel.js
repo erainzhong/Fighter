@@ -8,14 +8,14 @@ var fighter;
         function ScorePanel() {
             _super.call(this);
             var g = this.graphics;
-            g.beginFill(0x000000, 0.8);
+            g.beginFill(0xcacaca, 0.8);
             g.drawRect(0, 0, 400, 200);
             g.endFill();
             this.txt = new egret.TextField();
             this.txt.width = 400;
             this.txt.height = 200;
             this.txt.textAlign = "center";
-            this.txt.textColor = 0xFFFFFF;
+            this.txt.textColor = 0x3c3c3c;
             this.txt.size = 24;
             this.txt.y = 60;
             this.addChild(this.txt);

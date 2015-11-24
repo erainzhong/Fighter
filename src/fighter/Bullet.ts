@@ -24,7 +24,7 @@ module fighter
         /**回收*/
         public static reclaim(bullet:fighter.Bullet):void
         {
-             var textureName: string = bullet.textureName;
+            var textureName:string = bullet.textureName;
             if(fighter.Bullet.cacheDict[textureName]==null)
                 fighter.Bullet.cacheDict[textureName] = [];
             var dict:fighter.Bullet[] = fighter.Bullet.cacheDict[textureName];
@@ -32,7 +32,7 @@ module fighter
                 dict.push(bullet);
         }
 
-        private textureName:string;//可视为子弹类型名
+        public textureName:string;//可视为子弹类型名
 
         public constructor(texture:egret.Texture,textureName: string) {
             super(texture);
